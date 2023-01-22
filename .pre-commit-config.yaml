@@ -1,0 +1,31 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: name-tests-test
+    -   id: requirements-txt-fixer
+    -   id: check-added-large-files
+    -   id: mixed-line-ending
+    -   id: check-ast
+    -   id: check-merge-conflict
+    -   id: no-commit-to-branch
+-   repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+    -   id: black
+        args: [dtuhpc/, tests/]
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.11.4
+    hooks:
+    -   id: isort
+        args: [dtuhpc/, tests/]
+-   repo: https://github.com/pycqa/flake8
+    rev: 6.0.0  # pick a git hash / tag to point to
+    hooks:
+    -   id: flake8
+        args: [dtuhpc/, tests/]
+        exclude: docs

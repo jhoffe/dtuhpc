@@ -1,5 +1,7 @@
 requirements:
 	pip install -e .
+	pip install -r requirements-dev.txt
+	pip install -r requirements-test.txt
 	pip install -r requirements.txt
 
 format:
