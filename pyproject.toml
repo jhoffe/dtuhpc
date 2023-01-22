@@ -1,7 +1,7 @@
 [project]
 name = "dtuhpc"
 description = "Python package for interfacing with DTU's HPC cluster"
-version = "0.1.0-beta"
+version = "0.1.1-beta"
 authors = [
     { name = "Jonas Hoffmann", email = "jonashoffmanns@gmail.com" }
 ]
@@ -14,15 +14,18 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11"
 ]
+dependencies = [
+  "fabric==3.0.0",
+  "rich==13.2.0"
+]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "build", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages]
 find = {}
