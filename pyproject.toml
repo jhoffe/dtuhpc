@@ -5,8 +5,7 @@ version = "0.1.0-beta"
 authors = [
     { name = "Jonas Hoffmann", email = "jonashoffmanns@gmail.com" }
 ]
-dynamic = ["readme"]
-license = {file = ["LICENSE"]}
+readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
   "Environment :: Console",
