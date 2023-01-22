@@ -13,3 +13,12 @@ lint:
 
 test:
 	pytest -v tests/
+
+bump-major:
+	bumpversion major
+
+bump-minor:
+	bumpversion minor
+
+bump-patch:
+	bumpversion patch
