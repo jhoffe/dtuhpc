@@ -8,6 +8,8 @@ from dtuhpc.outputs.output import Output
 
 
 class Command(ABC):
+    """Base class for all commands."""
+
     base_command: str
     default_args: list[str]
     connection: HPCConnection
