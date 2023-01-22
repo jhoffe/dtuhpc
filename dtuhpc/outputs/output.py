@@ -4,6 +4,8 @@ from fabric.runners import Result
 
 
 class Output(ABC):
+    """Base class for all output types."""
+
     cmd_result: Result
 
     @abstractmethod
