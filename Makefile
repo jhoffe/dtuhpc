@@ -12,4 +12,4 @@ lint:
 	flake8 dtuhpc/ tests/
 
 test:
-	pytest -v tests/**/*.py
+	pytest -v tests/
