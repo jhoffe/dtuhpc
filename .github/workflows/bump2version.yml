@@ -3,6 +3,7 @@ name: "Run bump version"
 on:
   pull_request:
     branches: [ master ]
+    types: [ labeled ]
 
 jobs:
   bump_major:
