@@ -3,7 +3,7 @@ name: "Check version has been bumped"
 on:
   pull_request:
     branches:
-      - main
+      - release
 
 jobs:
   build:
