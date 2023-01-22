@@ -1,3 +1,5 @@
+.PHONY: requirements format lint test bump-major bump-minor bump-patch
+
 requirements:
 	pip install -e .
 	pip install -r requirements-dev.txt
