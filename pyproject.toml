@@ -7,9 +7,29 @@ authors = [
 ]
 readme = {file = ["README"], content-type = "text/markdown"}
 license = {file = ["LICENSE"]}
+requires-python = ">=3.7"
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11"
+]
 
 [build-system]
 requires = ["setuptools", "wheel"]
 
 [tool.setuptools.packages]
 find = {}
+
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 88
+skip_gitignore = true
