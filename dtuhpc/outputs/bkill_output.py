@@ -18,7 +18,7 @@ class BKillOutput(Output):
         if result.failed:
             return BKillOutput(cmd_result=result, job_id=None)
 
-        matches = re.match("[\w|\s]+<(?P<job_id>\d+)>[\w|\s]+", result.stdout)
+        matches = re.match("[a-zA-Z| ]+<(?P<job_id>[0-9]+)>[a-zA-Z| ]+", result.stdout)
 
         job_id = int(matches.group("job_id")) if matches else None
 

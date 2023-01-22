@@ -5,7 +5,6 @@ from dtuhpc.commands import BStat
 
 
 class BStatTestCase(unittest.TestCase):
-
     def setUp(self) -> None:
         self.connection = Mock()
         self.connection.run.return_value = Mock(stdout="")
@@ -18,5 +17,5 @@ class BStatTestCase(unittest.TestCase):
         self.assertListEqual(out.rows, [])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

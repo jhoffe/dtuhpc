@@ -20,7 +20,8 @@ class BSubOutput(Output):
             return BSubOutput(cmd_result=result, job_id=None)
 
         matches = re.match(
-            "[\w|\s]+<(?P<job_id>\d+)>[\w|\s]+<(?P<queue>\w+)>", result.stdout
+            "[a-zA-Z| ]+<(?P<job_id>[0-9]+)>[a-zA-Z| ]+<(?P<queue>[a-zA-Z]+)>",
+            result.stdout,
         )
 
         job_id = int(matches.group("job_id")) if matches else None
