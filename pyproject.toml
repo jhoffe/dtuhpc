@@ -1,7 +1,7 @@
 [project]
 name = "dtuhpc"
 description = "Python package for interfacing with DTU's HPC cluster"
-version = "0.1.1"
+version = "0.2.0"
 authors = [
     { name = "Jonas Hoffmann", email = "jonashoffmanns@gmail.com" }
 ]
