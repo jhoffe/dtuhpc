@@ -90,3 +90,6 @@ target/
 .mypy_cache/
 
 .pytest_cache/
+
+# HPC config file
+.dtuhpc.toml
