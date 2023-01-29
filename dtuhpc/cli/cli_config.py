@@ -3,6 +3,8 @@ from pathlib import Path
 from typing import Optional
 
 import tomli
+from git import Repo
+from github import Github
 
 from dtuhpc.connector import HPCConnection
 from dtuhpc.console import console
@@ -61,3 +63,9 @@ class CLIConfig:
             hide=self.hide,
             cwd=self.cwd if self.cwd is not None else self.config["ssh"]["default_cwd"],
         )
+
+    def git_repo(self) -> Repo:
+        return Repo(os.getcwd())
+
+    def github(self) -> Github:
+        return Github(self.config["github"]["access_token"])

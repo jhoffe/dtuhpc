@@ -1,7 +1,11 @@
+import os
+from typing import Optional
+
 import click
 
 from dtuhpc.cli.cli_config import CLIConfig
 from dtuhpc.cli.server_commands_cli import server_command
+from dtuhpc.console import console, prompt_list
 
 
 @click.group()
@@ -32,9 +36,37 @@ def init():
 
 
 @cli.command()
-def deploy():
+@click.option("--pr", "-p", type=Optional[int], default=None)
+@click.option("--branch", "-b", type=Optional[str], default=None)
+@click.pass_obj
+def deploy(config: CLIConfig, pr: Optional[int], branch: Optional[str]):
     """Deploy a job."""
-    pass
+    gh = config.github()
+
+    repo = config.git_repo()
+    repo_remote = repo.remote("origin")
+    repo_url = repo_remote.url
+    repo.close()
+
+    repo_id = (
+        repo_url.replace("git@github.com:", "")
+        .replace("https://github.com/", "")
+        .replace(".git", "")
+    )
+
+    gh_repo = gh.get_repo(repo_id)
+
+    pull_requests = gh_repo.get_pulls(state="open", sort="created")
+
+    options = [f"#{pr.number}: {pr.title}" for pr in pull_requests]
+
+    if len(options) == 0:
+        console.print("[bold red]No open pull requests.[/bold red]")
+        os.sys.exit(1)
+
+    option = prompt_list("Pick a PR:", options)
+
+    print(option)
 
 
 @cli.command()
