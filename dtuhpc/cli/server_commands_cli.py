@@ -57,6 +57,8 @@ def nodestat(
         reserved_slots=reserved,
     )
 
+    conn.close()
+
 
 @server_command.command()
 @click.option("--user", "-u", default=None, type=str)
@@ -69,6 +71,7 @@ def showstart(config: CLIConfig, user, queue, job_ids):
 
     cmd = Showstart(conn)
     cmd.run(*job_ids, user=user, queue=queue)
+    conn.close()
 
 
 @server_command.command()
@@ -79,6 +82,7 @@ def bqueues(config: CLIConfig):
 
     cmd = BQueues(conn)
     cmd.run()
+    conn.close()
 
 
 @server_command.command()
@@ -107,6 +111,7 @@ def bstat(
         user=user,
         queue=queue,
     )
+    conn.close()
 
 
 @server_command.command()
@@ -162,6 +167,7 @@ def bkill(
         status=status,
         kill_all_satisfying=zero,
     )
+    conn.close()
 
 
 @server_command.command()
@@ -173,3 +179,4 @@ def bsub(config: CLIConfig, script_path: str):
 
     cmd = BSub(conn)
     cmd.run(f"< {script_path}")
+    conn.close()

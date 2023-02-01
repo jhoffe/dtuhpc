@@ -27,7 +27,7 @@ class CLIConfig:
         )
         self.config = self._load_config()
         self.hide = hide
-        self.cwd = cwd
+        self.cwd = cwd if cwd is not None else self.config["ssh"]["default_cwd"]
 
     @staticmethod
     def _get_global_config_path() -> Path:
@@ -56,12 +56,13 @@ class CLIConfig:
         return config
 
     def connection(self) -> HPCConnection:
+        console.print("[bold green]Connecting...[/bold green]")
         return HPCConnection(
             user=self.config["ssh"]["user"],
             host=self.config["ssh"]["host"],
             password=self.config["ssh"]["password"],
             hide=self.hide,
-            cwd=self.cwd if self.cwd is not None else self.config["ssh"]["default_cwd"],
+            cwd=self.cwd,
         )
 
     def git_repo(self) -> Repo:
