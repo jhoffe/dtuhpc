@@ -1,13 +1,30 @@
-from fabric.runners import Result
-
-from dtuhpc.outputs.bstat_output import BStatOutput
+from typing import Optional
 
 from .command import Command
 
 
 class BStat(Command):
     base_command = "bstat"
-    default_args = []
 
-    def _parse_output(self, result: Result) -> BStatOutput:
-        return BStatOutput.parse(result)
+    def run(
+        self,
+        *job_ids: list[str],
+        cpu_usage: bool = False,
+        memory_usage: bool = False,
+        user: Optional[str] = None,
+        queue: Optional[str] = None,
+    ):
+        args = []
+
+        if cpu_usage:
+            args.append("-C")
+        if memory_usage:
+            args.append("-M")
+        if user is not None:
+            args.append(f"-u {user}")
+        if queue is not None:
+            args.append(f"-q {queue}")
+
+        args += job_ids
+
+        return super().run(*args)

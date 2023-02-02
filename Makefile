@@ -1,4 +1,4 @@
-.PHONY: requirements format lint test bump-major bump-minor bump-patch
+.PHONY: requirements format lint test bump-major bump-minor bump-patch docs
 
 requirements:
 	pip install -e .
