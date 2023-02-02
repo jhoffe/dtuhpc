@@ -18,17 +18,36 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11"
 ]
-dependencies = [
-  "fabric==3.0.0",
-  "rich==13.2.0"
-]
+
+[tool.poetry]
+name = "dtuhpc"
+version = "0.2.0"
+description = ""
+authors = ["Jonas Hoffmannn <s204071@student.dtu.dk>"]
+readme = "README.md"
+packages = [{include = "dtuhpc"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fabric = "^3.0.0"
+rich = "^13.2.0"
+gitpython = "^3.1.30"
+pygithub = "^1.57"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^6.0.0"
+pytest-mock = "*"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+bump2version = "^1.0.1"
+flake8 = "^6.0.0"
+isort = "^5.11.4"
+pre-commit = "^3.0.2"
 
 [build-system]
-requires = ["setuptools", "build", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages]
-find = {}
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
 atomic = true
