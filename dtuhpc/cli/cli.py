@@ -1,8 +1,7 @@
 import click
 
 from dtuhpc.cli.cli_config import CLIConfig
-from dtuhpc.cli.commands import deploy, exec, init, ssh
-from dtuhpc.cli.server_commands_cli import server_command
+from dtuhpc.cli.commands import deploy, exec, init, server_command, ssh
 
 
 @click.group()
