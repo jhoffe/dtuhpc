@@ -67,6 +67,7 @@ def deploy(
     conn = config.connection()
     conn.run("git fetch")
     conn.run(f"git checkout {branch_name}")
+    conn.run("git pull")
 
     conn.run(f"source venv/bin/activate && python {job_name} | bsub")
 
