@@ -93,3 +93,4 @@ target/
 
 # HPC config file
 .dtuhpc.toml
+venv/
