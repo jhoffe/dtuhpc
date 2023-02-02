@@ -62,12 +62,13 @@ def deploy(
             pr = pull_requests[option_idx]
             branch_name = pr.head.ref
 
+    config.cwd = config.config["project"]["path"]
+
     conn = config.connection()
     conn.run("git fetch")
     conn.run(f"git checkout {branch_name}")
 
-    with conn.run("source venv/bin/activate"):
-        conn.run(f"python {job_name} | bsub")
+    conn.run(f"source venv/bin/activate && python {job_name} | bsub")
 
     conn.close()
     conn.close()
