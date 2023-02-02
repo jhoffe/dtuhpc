@@ -22,4 +22,4 @@ jobs:
         poetry install --only=dev
     - name: Run isort
       run: |
-        python -m isort dtuhpc/ tests/
+        poetry run isort dtuhpc/ tests/

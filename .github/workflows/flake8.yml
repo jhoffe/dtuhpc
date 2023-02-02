@@ -22,4 +22,4 @@ jobs:
         poetry install --only=dev
     - name: Lint with flake8
       run: |
-        python -m flake8 dtuhpc/ tests/
+        poetry run flake8 dtuhpc/ tests/
