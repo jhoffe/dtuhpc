@@ -1,5 +1,6 @@
 """This module contains the JobWriter class, which is used to write LSF job scripts."""
 from sys import stdout
+from typing import Union
 
 from .commands import Command
 from .options import Option
@@ -27,6 +28,14 @@ class JobWriter:
         """
         self.options = opts
         self.commands = cmds
+
+    def add(self, opt_or_cmd: Union[Option, Command]):
+        if isinstance(opt_or_cmd, Option):
+            self.add_option(opt_or_cmd)
+        if isinstance(opt_or_cmd, Command):
+            self.add_command(opt_or_cmd)
+
+        return self
 
     def add_option(self, option: Option) -> "JobWriter":
         """Add an option to the job script.
