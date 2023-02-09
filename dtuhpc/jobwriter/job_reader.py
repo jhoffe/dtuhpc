@@ -23,7 +23,7 @@ from dtuhpc.jobwriter.options import (
     WallTimeOption,
 )
 
-OPTION_MAPPING = {
+MAPPING = {
     "core_block_size": CoreBlockSizeOption,
     "core_p_tile_size": CorePTileSizeOption,
     "email": EmailForNotificationsOption,
@@ -40,9 +40,9 @@ OPTION_MAPPING = {
     "walltime": WallTimeOption,
     "use_gpu": UseGPUOption,
     "option": Option,
+    "module": LoadModuleCommand,
+    "commands": Command,
 }
-
-COMMAND_MAPPING = {"module": LoadModuleCommand, "command": Command}
 
 
 class JobReader:
@@ -61,36 +61,24 @@ class JobReader:
 
         return self
 
-    def add_options(self):
-        for key, value in self.config["opts"].items():
-            if key in OPTION_MAPPING:
+    def parse(self):
+        for key, value in self.config.items():
+            if key in MAPPING:
+                option = MAPPING[key]
+
                 if type(value) is dict:
-                    self.job_writer.add_option(OPTION_MAPPING[key](**value))
+                    print(value)
+                    self.job_writer.add(option(**value))
                 elif type(value) is list:
                     for item in value:
-                        self.job_writer.add_option(OPTION_MAPPING[key](**item))
+                        self.job_writer.add(
+                            option(**item) if type(item) is dict else option(item)
+                        )
+                else:
+                    self.job_writer.add(option(value))
             else:
                 raise ValueError(f"Unknown option: {key}")
         return self
 
-    def add_commands(self):
-        if "cmds" not in self.config.keys():
-            raise ValueError("No commands found in job file")
-        for key, value in self.config["cmds"].items():
-            if key in COMMAND_MAPPING:
-                if type(value) is dict:
-                    self.job_writer.add_command(COMMAND_MAPPING[key](**value))
-                elif type(value) is list:
-                    for item in value:
-                        self.job_writer.add_command(COMMAND_MAPPING[key](**item))
-            else:
-                raise ValueError(f"Unknown command: {key}")
-        return self
-
     def to_str(self):
         return self.job_writer.to_string()
-
-
-job = JobReader("test.toml").add_options().add_commands().to_str()
-
-print(job)
