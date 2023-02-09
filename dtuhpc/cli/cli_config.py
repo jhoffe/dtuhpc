@@ -1,8 +1,14 @@
+import base64
+import json
 import os
 from pathlib import Path
 from typing import Optional
 
+import click
 import tomli
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from git import Repo
 from github import Github
 
@@ -14,6 +20,7 @@ class CLIConfig:
     config_path: Path
     hide: bool
     config: dict = {}
+    auth: dict = {}
     cwd: Optional[str]
 
     def __init__(
@@ -34,6 +41,10 @@ class CLIConfig:
         return Path(os.path.join(Path.home(), ".config", ".dtuhpc.toml"))
 
     @staticmethod
+    def get_global_auth_path() -> Path:
+        return Path(os.path.join(Path.home(), ".config", "dtuhpc", "auth.json"))
+
+    @staticmethod
     def _get_local_config_path() -> Path:
         return Path(os.path.join(Path.cwd(), ".dtuhpc.toml"))
 
@@ -46,7 +57,7 @@ class CLIConfig:
         if global_path.exists():
             return global_path
 
-        console.print("[bold red]Could not find any config file.[/bold red]")
+        console.error("Could not find any config file.")
         os.sys.exit(1)
 
     def _load_config(self) -> dict:
@@ -55,15 +66,43 @@ class CLIConfig:
 
         return config
 
+    def _load_auth(self) -> dict:
+        if not os.path.exists(self.get_global_auth_path()):
+            console.error("Could not find auth file. Please call 'dtuhpc auth' first.")
+            os.sys.exit(1)
+
+        with open(self.get_global_auth_path(), "rb") as auth_file:
+            auth = json.load(auth_file)
+
+        encryption_key = bytes(click.prompt("Encryption key", hide_input=True), "utf-8")
+
+        salt = base64.urlsafe_b64decode(auth["salt"].encode("utf-8"))
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=salt,
+            iterations=480000,
+        )
+        key = base64.urlsafe_b64encode(kdf.derive(encryption_key))
+
+        f = Fernet(key)
+
+        auth["password"] = f.decrypt(bytes(auth["password"], "utf-8")).decode("utf-8")
+
+        return auth
+
     def connection(self) -> HPCConnection:
-        console.print("[bold green]Connecting...[/bold green]")
-        return HPCConnection(
-            user=self.config["ssh"]["user"],
+        self.auth = self._load_auth()
+        console.primary("Connecting...")
+        conn = HPCConnection(
+            user=self.auth["username"],
             host=self.config["ssh"]["host"],
-            password=self.config["ssh"]["password"],
+            password=self.auth["password"],
             hide=self.hide,
             cwd=self.cwd,
         )
+        console.success("Connected!")
+        return conn
 
     def git_repo(self) -> Repo:
         return Repo(os.getcwd())
