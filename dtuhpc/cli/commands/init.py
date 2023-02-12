@@ -41,11 +41,15 @@ def init(config: CLIConfig, poetry: bool, custom_job: click.Path):
     if poetry and custom_job is not None:
         raise ValueError("Cannot use both poetry and custom job.")
     elif poetry:
-        job_path = "default_jobs/init-poetry.toml"
+        job_path = os.path.join(
+            os.path.dirname(__file__), "..", "..", "default_jobs/init-poetry.toml"
+        )
     elif custom_job is not None:
         job_path = custom_job
     else:
-        job_path = "default_jobs/init-pip.toml"
+        job_path = os.path.join(
+            os.path.dirname(__file__), "..", "..", "default_jobs/init-pip.toml"
+        )
 
     job_reader = JobReader(job_path, variables)
     job_reader.parse()
