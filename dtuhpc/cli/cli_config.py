@@ -33,7 +33,7 @@ class CLIConfig:
             Path(config_path) if config_path is not None else self._get_config_path()
         )
         self.hide = hide
-        self.cwd = cwd if cwd is not None else self.config["ssh"]["default_cwd"]
+        self.cwd = cwd
 
     @staticmethod
     def _get_global_config_path() -> Path:
@@ -64,6 +64,7 @@ class CLIConfig:
             config = tomli.load(config_file)
 
         self.config = config
+        self.cwd = self.cwd if self.cwd is not None else config["ssh"]["cwd"]
 
     def _load_auth(self) -> dict:
         if not os.path.exists(self.get_global_auth_path()):
