@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.1 (2023-02-12)
+
+
 ## v1.0.0 (2023-02-12)
 ### Feature
 * Add semantic release workflow ([#31](https://github.com/jhoffe/dtuhpc/issues/31)) ([`5b022ce`](https://github.com/jhoffe/dtuhpc/commit/5b022ce7449827365319b15e36c938a0d5bf43a5))
