@@ -59,3 +59,6 @@ atomic = true
 profile = "black"
 line_length = 88
 skip_gitignore = true
+
+[tool.semantic_release]
+version_variable = "pyproject.toml:version"
