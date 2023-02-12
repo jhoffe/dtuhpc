@@ -21,11 +21,6 @@ jobs:
         token: ${{ secrets.GH_API_TOKEN }}
     - name: Install poetry
       run: |
-        echo "ACTOR: ${{ github.actor }}"
-        echo "EVENT_NAME: ${{ github.event_name }}"
-        echo "BASE_REF: ${{ github.github_base_ref }}"
-        echo "REF: ${{ github.github_ref }}"
-        echo "REF NAME: ${{ github.github_ref_name }}"
         pipx install poetry
     - name: Poetry install
       run: poetry install
@@ -42,6 +37,7 @@ jobs:
         user: __token__
         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
         repository_url: https://test.pypi.org/legacy/
+        skip_existing: true
 
     - name: Test install from TestPyPI
       run: |
@@ -55,3 +51,4 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+        skip_existing: true
