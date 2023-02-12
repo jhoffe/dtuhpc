@@ -17,8 +17,8 @@ from dtuhpc.jobwriter.job_reader import JobReader
 def deploy(
     config: CLIConfig, pr: Optional[int], branch: Optional[str], job_name: Optional[str]
 ):
-    config.load_config()
     """Deploy a job."""
+    config.load_config()
     gh = config.github()
 
     repo = config.git_repo()

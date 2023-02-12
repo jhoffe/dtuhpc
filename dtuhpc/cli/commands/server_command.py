@@ -12,8 +12,8 @@ from dtuhpc.cli.commands.server.showstart import showstart
 @click.group(name="c")
 @click.pass_obj
 def server_command(config: CLIConfig):
-    config.load_config()
     """Execute a predefined command."""
+    config.load_config()
 
 
 server_command.add_command(bkill)
