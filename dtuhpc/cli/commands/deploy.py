@@ -84,7 +84,7 @@ def deploy(
     )
     conn.conn.put(StringIO(job_contents), deploy_job_path)
 
-    jsm = " -jsm" if jsm else ""
+    jsm = " -jsm y" if jsm else ""
 
     conn.run(f"bsub -cwd {config.cwd}{jsm} < {deploy_job_path}")
     conn.run(f"rm {deploy_job_path}")
