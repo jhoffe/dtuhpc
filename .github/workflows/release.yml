@@ -21,5 +21,18 @@ jobs:
       uses: relekang/python-semantic-release@master
       with:
         github_token: ${{ secrets.GH_API_TOKEN }}
-        repository_username: __token__
-        repository_password: ${{ secrets.PYPI_API_TOKEN }}
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GH_API_TOKEN }}
+    - name: Install poetry
+      run: pipx install poetry
+    - name: Publish to PyPI
+      run: poetry publish --build
+      env:
+        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
