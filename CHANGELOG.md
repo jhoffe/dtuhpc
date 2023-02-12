@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.11 (2023-02-12)
+
+
+## v1.0.10 (2023-02-12)
+
+
+## v1.0.9 (2023-02-12)
+
+
+## v1.0.8 (2023-02-12)
+### Fix
+* Release ([#48](https://github.com/jhoffe/dtuhpc/issues/48)) ([`3201324`](https://github.com/jhoffe/dtuhpc/commit/32013249159dde63322c739de27b96ba04702c63))
+
 ## v1.0.7 (2023-02-12)
 
 
