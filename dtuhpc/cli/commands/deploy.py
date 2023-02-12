@@ -67,6 +67,12 @@ def deploy(
     conn.run(f"git checkout {branch_name}")
     conn.run("git pull")
 
-    conn.run(f"source venv/bin/activate && dtuhpc parse {job_name} | bsub")
+    conn.run(
+        f"""
+        source venv/bin/activate && \
+        dtuhpc parse {job_name} > job.sh && \
+        bsub -cwd {config.cwd} < job.sh && \
+        rm -f job.sh"""
+    )
 
     conn.close()
