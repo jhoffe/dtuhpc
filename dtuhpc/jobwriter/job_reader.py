@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import tomli
@@ -34,7 +35,7 @@ MAPPING = {
     "name": NameOption,
     "queue": QueueOption,
     "single_host": SingleHostOption,
-    "standard_output_file_path": StandardOutputFilePathOption,
+    "standard_output": StandardOutputFilePathOption,
     "notification_start": SendNotificationAtStartOption,
     "notification_end": SendNotificationAtEndOption,
     "walltime": WallTimeOption,
@@ -50,24 +51,37 @@ class JobReader:
     config: dict
     job_writer: JobWriter
 
-    def __init__(self, job_file_path: str):
+    def __init__(self, job_file_path: str, variables: dict = None):
         self.job_file_path = Path(job_file_path)
         self.job_writer = JobWriter()
-        self.load_job(job_file_path)
+        self.load_job(job_file_path, variables)
 
-    def load_job(self, job_file_path: str):
-        with open(job_file_path, "rb") as f:
-            self.config = tomli.load(f)
+    def load_job(self, job_file_path: str, variables: dict = None) -> "JobReader":
+        with open(job_file_path, "r") as f:
+            contents = self.replace_variables(f.read(), variables or {})
+            self.config = tomli.loads(contents)
 
         return self
 
-    def parse(self):
+    @staticmethod
+    def replace_variables(string: str, variables: dict) -> str:
+        regex = re.compile(r"\${{\s*(?P<var_name>[a-zA-Z_]+[0-9]*)\s*}}")
+
+        for match in regex.finditer(string):
+            var_name = match.group("var_name")
+            if var_name in variables:
+                string = string.replace(match.group(0), variables[var_name])
+            else:
+                raise ValueError(f"Variable {var_name} not found in job file")
+
+        return string
+
+    def parse(self) -> "JobReader":
         for key, value in self.config.items():
             if key in MAPPING:
                 option = MAPPING[key]
 
                 if type(value) is dict:
-                    print(value)
                     self.job_writer.add(option(**value))
                 elif type(value) is list:
                     for item in value:

@@ -1,7 +1,8 @@
 import click
 
 from dtuhpc.cli.cli_config import CLIConfig
-from dtuhpc.cli.commands import deploy, exec, init, server_command, ssh
+from dtuhpc.cli.commands import deploy, exec, init, parse, server_command, ssh
+from dtuhpc.cli.commands.auth import auth
 
 
 @click.group()
@@ -25,11 +26,17 @@ def cli(ctx, hide, config, cwd):
     ctx.obj = CLIConfig(config_path=config, hide=hide, cwd=cwd)
 
 
-if __name__ == "__main__":
+def main():
     cli.add_command(server_command)
     cli.add_command(init)
     cli.add_command(exec)
     cli.add_command(deploy)
     cli.add_command(ssh)
+    cli.add_command(auth)
+    cli.add_command(parse)
 
     cli()
+
+
+if __name__ == "__main__":
+    main()

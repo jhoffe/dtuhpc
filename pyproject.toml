@@ -27,6 +27,9 @@ authors = ["Jonas Hoffmannn <s204071@student.dtu.dk>"]
 readme = "README.md"
 packages = [{include = "dtuhpc"}]
 
+[tool.poetry.scripts]
+dtuhpc = "dtuhpc.cli.cli:main"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 fabric = "^3.0.0"
@@ -34,6 +37,7 @@ rich = "^13.2.0"
 gitpython = "^3.1.30"
 pygithub = "^1.57"
 tomli = "^2.0.1"
+cryptography = "^39.0.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^6.0.0"

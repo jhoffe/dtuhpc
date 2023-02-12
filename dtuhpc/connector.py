@@ -16,7 +16,7 @@ class HPCConnection:
         hide (bool): Hide the output of the command.
     """
 
-    _conn: Connection
+    conn: Connection
     cwd: Optional[str]
     hide: bool
 
@@ -42,7 +42,7 @@ class HPCConnection:
         connect_kwargs = {"password": password} if password is not None else None
         self.hide = hide
         self.cwd = cwd
-        self._conn = Connection(
+        self.conn = Connection(
             user=user, host=host, connect_kwargs=connect_kwargs, **kwargs
         )
 
@@ -57,15 +57,15 @@ class HPCConnection:
         """
 
         if self.cwd is not None:
-            with self._conn.cd(self.cwd):
-                return self._conn.run(f"bash -l -c '{command}'", hide=self.hide)
+            with self.conn.cd(self.cwd):
+                return self.conn.run(f"bash -l -c '{command}'", hide=self.hide)
 
-        return self._conn.run(f"bash -l -c '{command}'", hide=self.hide)
+        return self.conn.run(f"bash -l -c '{command}'", hide=self.hide)
 
     def open_shell(self) -> None:
         """Open a shell on the DTU HPC server."""
-        self._conn.shell()
+        self.conn.shell()
 
     def close(self):
         """Close the connection to the DTU HPC server."""
-        self._conn.close()
+        self.conn.close()

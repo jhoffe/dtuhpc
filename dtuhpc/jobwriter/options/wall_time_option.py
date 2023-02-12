@@ -14,5 +14,9 @@ class WallTimeOption(Option):
 
         super().__init__(option="W", value=self.format_time())
 
+    @staticmethod
+    def time_prefix(time: int) -> str:
+        return f"0{time}" if time < 10 else str(time)
+
     def format_time(self):
-        return f"{self.hours}:{self.minutes}"
+        return f"{self.time_prefix(self.hours)}:{self.time_prefix(self.minutes)}"

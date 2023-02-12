@@ -1,10 +1,12 @@
 import os
+from io import StringIO
 from typing import Optional
 
 import click
 
 from dtuhpc.cli.cli_config import CLIConfig
 from dtuhpc.console import console
+from dtuhpc.jobwriter.job_reader import JobReader
 
 
 @click.command()
@@ -15,6 +17,7 @@ from dtuhpc.console import console
 def deploy(
     config: CLIConfig, pr: Optional[int], branch: Optional[str], job_name: Optional[str]
 ):
+    config.load_config()
     """Deploy a job."""
     gh = config.github()
 
@@ -43,11 +46,9 @@ def deploy(
             all_branches = gh_repo.get_branches()
             all_branch_names = [branch.name for branch in all_branches]
 
-            branch_name = console.prompt_list("Pick a branch: ", all_branch_names)
+            branch_index = console.prompt_list("Pick a branch: ", all_branch_names)
+            branch_name = all_branch_names[branch_index]
         else:
-            all_branches = gh_repo.get_branches()
-            all_branch_names = [branch.name for branch in all_branches]
-
             pull_requests = gh_repo.get_pulls(state="open", sort="created")
 
             options = [
@@ -69,7 +70,16 @@ def deploy(
     conn.run(f"git checkout {branch_name}")
     conn.run("git pull")
 
-    conn.run(f"source venv/bin/activate && python {job_name} | bsub")
+    job_reader = JobReader(job_name)
+    job_reader.parse()
+    job_contents = job_reader.to_str()
 
-    conn.close()
+    deploy_job_path = os.path.join(
+        config.config["ssh"]["default_cwd"], ".dtuhpc/", "deploy_job.sh"
+    )
+    conn.conn.put(StringIO(job_contents), deploy_job_path)
+
+    conn.run(f"bsub -cwd {config.cwd} < {deploy_job_path}")
+    conn.run(f"rm {deploy_job_path}")
+
     conn.close()
