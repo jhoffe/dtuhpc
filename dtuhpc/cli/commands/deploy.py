@@ -72,10 +72,14 @@ def deploy(
 
     job_reader = JobReader(job_name)
     job_reader.parse()
+    job_contents = job_reader.to_str()
 
-    deploy_job_path = os.path.join(config.cwd, ".dtuhpc/", "deploy_job.sh")
-    conn.conn.put(StringIO(job_reader.to_str()), deploy_job_path)
+    deploy_job_path = os.path.join(
+        config.config["ssh"]["default_cwd"], ".dtuhpc/", "deploy_job.sh"
+    )
+    conn.conn.put(StringIO(job_contents), deploy_job_path)
 
     conn.run(f"bsub -cwd {config.cwd} < {deploy_job_path}")
+    conn.run(f"rm {deploy_job_path}")
 
     conn.close()
