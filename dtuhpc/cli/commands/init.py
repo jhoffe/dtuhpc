@@ -9,8 +9,20 @@ from dtuhpc.jobwriter.job_reader import JobReader
 
 
 @click.command()
+@click.option(
+    "--poetry",
+    is_flag=True,
+    default=False,
+    help="Use poetry to install dependencies on HPC.",
+)
+@click.option(
+    "--custom-job",
+    default=None,
+    type=click.Path(exists=True),
+    help="Use a custom job to initiate repository on HPC.",
+)
 @click.pass_obj
-def init(config: CLIConfig):
+def init(config: CLIConfig, poetry: bool, custom_job: click.Path):
     """Initiates the current project on DTU's HPC server."""
     config.load_config()
     repo = config.git_repo()
@@ -26,7 +38,16 @@ def init(config: CLIConfig):
         "git_url": repo_url,
     }
 
-    job_reader = JobReader("default_jobs/init-poetry.toml", variables)
+    if poetry and custom_job is not None:
+        raise ValueError("Cannot use both poetry and custom job.")
+    elif poetry:
+        job_path = "default_jobs/init-poetry.toml"
+    elif custom_job is not None:
+        job_path = custom_job
+    else:
+        job_path = "default_jobs/init-pip.toml"
+
+    job_reader = JobReader(job_path, variables)
     job_reader.parse()
 
     conn = config.connection()

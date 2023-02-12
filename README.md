@@ -41,7 +41,7 @@ The GitHub access token can be generated from the following [page](https://githu
 ### Setup project
 To set up a project, you can run:
 ```bash
-dtuhpc init [--poetry] [--pip] [--custom=<path to job script>]
+dtuhpc init [--poetry] [--custom-job=<path to job script>]
 ```
 This will dispatch a job to the cluster, which will clone your project, create a
 virtual environment, and install the dependencies.
