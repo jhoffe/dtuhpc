@@ -17,8 +17,8 @@ class UseGPUOption(Option):
         num_of_gpus: int = 1,
         per_task: bool = False,
         mode: str = "exclusive_process",
-        aff: bool = True,
-        block: bool = False,
+        aff: Optional[bool] = None,
+        block: Optional[bool] = None,
         gpu_model_name: Optional[str] = None,
         memory_size: Optional[int] = None,
     ):
@@ -42,9 +42,13 @@ class UseGPUOption(Option):
             if self.per_task is False
             else f"num={self.num_of_gpus}/task",
             f"mode={self.mode}",
-            f"aff={self.format_bool_as_yes_no(self.aff)}",
-            f"block={self.format_bool_as_yes_no(self.block)}",
         ]
+
+        if self.aff is not None:
+            options.append(f"aff={self.format_bool_as_yes_no(self.aff)}")
+
+        if self.block is not None:
+            options.append(f"block={self.format_bool_as_yes_no(self.block)}")
 
         if self.gpu_model_name is not None:
             options.append(f"gmodel={self.gpu_model_name}")
