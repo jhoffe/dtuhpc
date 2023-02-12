@@ -1,13 +1,12 @@
 queue = "hpc"
-name = "test_${{ project_name }}"
+name = "test"
 walltime = { hours = 0, minutes = 15 }
 single_host = true
 cpu = 2
 memory = 4
-standard_output = "test_${{ project_name }}.out"
-error_output = "test_${{ project_name }}.err"
+standard_output = "test.out"
+error_output = "test.err"
 
 commands = [
-    "cd ${{ project_path }}",
     "echo 'Hello World!' > hello.txt",
 ]
