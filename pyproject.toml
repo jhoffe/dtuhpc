@@ -61,7 +61,7 @@ line_length = 88
 skip_gitignore = true
 
 [tool.semantic_release]
-version_variable = "pyproject.toml:tool.poetry.version"
+version_toml = "pyproject.toml:tool.poetry.version"
 branch = "master"                           # branch to make releases of
 changelog_file = "CHANGELOG.md"             # changelog file
 build_command = "poetry build"              # build dists
