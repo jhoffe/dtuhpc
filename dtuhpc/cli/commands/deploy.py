@@ -12,10 +12,15 @@ from dtuhpc.jobwriter.job_reader import JobReader
 @click.command()
 @click.option("--pr", "-p", default=None, type=int)
 @click.option("--branch", "-b", default=None, type=str)
+@click.option("--jsm", "-j", is_flag=True, type=bool, default=False)
 @click.argument("job_name", type=str, default=None)
 @click.pass_obj
 def deploy(
-    config: CLIConfig, pr: Optional[int], branch: Optional[str], job_name: Optional[str]
+    config: CLIConfig,
+    pr: Optional[int],
+    branch: Optional[str],
+    job_name: Optional[str],
+    jsm: bool,
 ):
     """Deploy a job."""
     config.load_config()
@@ -79,7 +84,9 @@ def deploy(
     )
     conn.conn.put(StringIO(job_contents), deploy_job_path)
 
-    conn.run(f"bsub -cwd {config.cwd} < {deploy_job_path}")
+    jsm = " -jsm" if jsm else ""
+
+    conn.run(f"bsub -cwd {config.cwd}{jsm} < {deploy_job_path}")
     conn.run(f"rm {deploy_job_path}")
 
     conn.close()
