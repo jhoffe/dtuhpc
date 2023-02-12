@@ -1,0 +1,15 @@
+# Changelog
+
+<!--next-version-placeholder-->
+
+## v1.0.0 (2023-02-12)
+### Feature
+* Add semantic release workflow ([#31](https://github.com/jhoffe/dtuhpc/issues/31)) ([`5b022ce`](https://github.com/jhoffe/dtuhpc/commit/5b022ce7449827365319b15e36c938a0d5bf43a5))
+* Use poetry instead of setuptools ([#25](https://github.com/jhoffe/dtuhpc/issues/25)) ([`d94ee83`](https://github.com/jhoffe/dtuhpc/commit/d94ee834622e081771d5608149e0b71b186692a0))
+* Add job writer ([#20](https://github.com/jhoffe/dtuhpc/issues/20)) ([`c32919d`](https://github.com/jhoffe/dtuhpc/commit/c32919dd176a7935f0ab974ced99bcff06bc695a))
+
+### Fix
+* **workflows:** Add version_variable ([#32](https://github.com/jhoffe/dtuhpc/issues/32)) ([`0066464`](https://github.com/jhoffe/dtuhpc/commit/00664644a0f68a8b18ea7b890b6260eb2decd7be))
+
+### Breaking
+* add automatic releases and deployments. ([`5b022ce`](https://github.com/jhoffe/dtuhpc/commit/5b022ce7449827365319b15e36c938a0d5bf43a5))
