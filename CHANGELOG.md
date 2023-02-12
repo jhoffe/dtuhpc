@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.6 (2023-02-12)
+### Fix
+* **workflows:** Workflow update ([#46](https://github.com/jhoffe/dtuhpc/issues/46)) ([`de7e564`](https://github.com/jhoffe/dtuhpc/commit/de7e564cb1b43fcce5f144f268b8d872df182790))
+
 ## v1.0.5 (2023-02-12)
 
 
