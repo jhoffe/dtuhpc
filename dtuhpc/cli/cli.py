@@ -26,7 +26,7 @@ def cli(ctx, hide, config, cwd):
     ctx.obj = CLIConfig(config_path=config, hide=hide, cwd=cwd)
 
 
-if __name__ == "__main__":
+def main():
     cli.add_command(server_command)
     cli.add_command(init)
     cli.add_command(exec)
@@ -35,3 +35,7 @@ if __name__ == "__main__":
     cli.add_command(auth)
 
     cli()
+
+
+if __name__ == "__main__":
+    main()

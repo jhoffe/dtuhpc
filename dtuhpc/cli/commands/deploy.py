@@ -43,7 +43,8 @@ def deploy(
             all_branches = gh_repo.get_branches()
             all_branch_names = [branch.name for branch in all_branches]
 
-            branch_name = console.prompt_list("Pick a branch: ", all_branch_names)
+            branch_index = console.prompt_list("Pick a branch: ", all_branch_names)
+            branch_name = all_branch_names[branch_index]
         else:
             pull_requests = gh_repo.get_pulls(state="open", sort="created")
 
