@@ -20,7 +20,9 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.GH_API_TOKEN }}
     - name: Install poetry
-      run: pipx install poetry
+      run: |
+        echo "ACTOR: ${{ github.actor }}"
+        pipx install poetry
     - name: Poetry install
       run: poetry install
     - name: Use Python Semantic Release to prepare release
