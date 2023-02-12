@@ -12,6 +12,7 @@ from dtuhpc.jobwriter.job_reader import JobReader
 @click.pass_obj
 def init(config: CLIConfig):
     """Initiates the current project on DTU's HPC server."""
+    config.load_config()
     repo = config.git_repo()
     repo_remote = repo.remote("origin")
     repo_url = repo_remote.url

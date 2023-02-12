@@ -19,7 +19,7 @@ from dtuhpc.console import console
 class CLIConfig:
     config_path: Path
     hide: bool
-    config: dict = {}
+    config: Optional[dict] = None
     auth: dict = {}
     cwd: Optional[str]
 
@@ -32,7 +32,6 @@ class CLIConfig:
         self.config_path = (
             Path(config_path) if config_path is not None else self._get_config_path()
         )
-        self.config = self._load_config()
         self.hide = hide
         self.cwd = cwd if cwd is not None else self.config["ssh"]["default_cwd"]
 
@@ -60,11 +59,11 @@ class CLIConfig:
         console.error("Could not find any config file.")
         os.sys.exit(1)
 
-    def _load_config(self) -> dict:
+    def load_config(self):
         with open(self.config_path, "rb") as config_file:
             config = tomli.load(config_file)
 
-        return config
+        self.config = config
 
     def _load_auth(self) -> dict:
         if not os.path.exists(self.get_global_auth_path()):

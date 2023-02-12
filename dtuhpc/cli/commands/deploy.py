@@ -15,6 +15,7 @@ from dtuhpc.console import console
 def deploy(
     config: CLIConfig, pr: Optional[int], branch: Optional[str], job_name: Optional[str]
 ):
+    config.load_config()
     """Deploy a job."""
     gh = config.github()
 
