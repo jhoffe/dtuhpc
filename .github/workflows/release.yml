@@ -11,15 +11,15 @@ jobs:
     concurrency: release
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.actor != 'github-actions'
     steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GH_API_TOKEN }}
     - name: Set up Python 3.10
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
         cache: 'poetry'
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GH_API_TOKEN }}
     - name: Install poetry
       run: |
         pipx install poetry
