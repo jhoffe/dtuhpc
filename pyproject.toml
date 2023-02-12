@@ -64,6 +64,9 @@ skip_gitignore = true
 [tool.semantic_release]
 version_toml = "pyproject.toml:tool.poetry.version"
 branch = "master"                           # branch to make releases of
+build_command = "poetry build"              # command to build the package
+dist_path = "dist/"                         # path to the distribution files
+remove_dist = true
 changelog_file = "CHANGELOG.md"             # changelog file
 upload_to_release = true                    # auto-create GitHub release
 upload_to_pypi = false                      # don't auto-upload to PyPI
