@@ -52,4 +52,4 @@ class UseGPUOption(Option):
         if self.memory_size is not None:
             options.append(f"gmem={self.memory_size}G")
 
-        return "[" + ":".join(options) + "]"
+        return ":".join(options)
