@@ -50,7 +50,7 @@ will be explained in the next section.
 
 ### Writing jobs
 Jobs are defined as toml files. It contains numerous options:
-```toml
+```
 name = "<name of job>"
 queue = "<queue name>"
 single_host = <true/false>
