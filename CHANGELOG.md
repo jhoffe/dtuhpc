@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.1 (2023-02-12)
+### Fix
+* Fix job loading ([#59](https://github.com/jhoffe/dtuhpc/issues/59)) ([`baaffad`](https://github.com/jhoffe/dtuhpc/commit/baaffad9241c9adfd1396caf5bfa1ee5f32205cf))
+
 ## v2.0.0 (2023-02-12)
 ### Feature
 * Update version in pyproject ([#56](https://github.com/jhoffe/dtuhpc/issues/56)) ([`e5a4595`](https://github.com/jhoffe/dtuhpc/commit/e5a4595af2d963ab93b05416b8cb0482ed946e30))
