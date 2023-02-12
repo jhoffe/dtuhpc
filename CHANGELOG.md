@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.2 (2023-02-12)
+### Fix
+* **options:** Remove square brackets ([#60](https://github.com/jhoffe/dtuhpc/issues/60)) ([`b71e04a`](https://github.com/jhoffe/dtuhpc/commit/b71e04af9e8b378fcf0e553f8566693a61f6882c))
+
 ## v2.0.1 (2023-02-12)
 ### Fix
 * Fix job loading ([#59](https://github.com/jhoffe/dtuhpc/issues/59)) ([`baaffad`](https://github.com/jhoffe/dtuhpc/commit/baaffad9241c9adfd1396caf5bfa1ee5f32205cf))
