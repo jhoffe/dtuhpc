@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.0 (2023-02-12)
+### Feature
+* Update version in pyproject ([#56](https://github.com/jhoffe/dtuhpc/issues/56)) ([`e5a4595`](https://github.com/jhoffe/dtuhpc/commit/e5a4595af2d963ab93b05416b8cb0482ed946e30))
+
+### Breaking
+* remove parse command ([`e5a4595`](https://github.com/jhoffe/dtuhpc/commit/e5a4595af2d963ab93b05416b8cb0482ed946e30))
+
+### Documentation
+* Update readme docs ([#55](https://github.com/jhoffe/dtuhpc/issues/55)) ([`7cdced5`](https://github.com/jhoffe/dtuhpc/commit/7cdced5c43e7a31e6869686b081a5195b54dfdff))
+
 ## v1.0.12 (2023-02-12)
 
 
