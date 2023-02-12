@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.0 (2023-02-12)
+### Feature
+* Add jsm option to deploy ([`501901a`](https://github.com/jhoffe/dtuhpc/commit/501901a90fd37b1dbe1ed5bfae464ee38ac4103c))
+
 ## v2.0.3 (2023-02-12)
 
 
