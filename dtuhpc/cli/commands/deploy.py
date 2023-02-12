@@ -1,10 +1,12 @@
 import os
+from io import StringIO
 from typing import Optional
 
 import click
 
 from dtuhpc.cli.cli_config import CLIConfig
 from dtuhpc.console import console
+from dtuhpc.jobwriter.job_reader import JobReader
 
 
 @click.command()
@@ -68,12 +70,16 @@ def deploy(
     conn.run(f"git checkout {branch_name}")
     conn.run("git pull")
 
+    job_reader = JobReader(job_name)
+    job_reader.parse()
+
+    deploy_job_path = os.path.join(config.cwd, ".dtuhpc/", "deploy_job.sh")
+    conn.conn.put(StringIO(job_reader.to_str()), deploy_job_path)
+
     conn.run(
         f"""
         source venv/bin/activate && \
-        dtuhpc parse {job_name} > job.sh && \
-        bsub -cwd {config.cwd} < job.sh && \
-        rm -f job.sh"""
+        bsub -cwd {config.cwd} < {deploy_job_path}"""
     )
 
     conn.close()
