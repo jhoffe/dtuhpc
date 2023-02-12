@@ -76,10 +76,6 @@ def deploy(
     deploy_job_path = os.path.join(config.cwd, ".dtuhpc/", "deploy_job.sh")
     conn.conn.put(StringIO(job_reader.to_str()), deploy_job_path)
 
-    conn.run(
-        f"""
-        source venv/bin/activate && \
-        bsub -cwd {config.cwd} < {deploy_job_path}"""
-    )
+    conn.run(f"bsub -cwd {config.cwd} < {deploy_job_path}")
 
     conn.close()
