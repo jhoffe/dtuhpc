@@ -45,9 +45,6 @@ def deploy(
 
             branch_name = console.prompt_list("Pick a branch: ", all_branch_names)
         else:
-            all_branches = gh_repo.get_branches()
-            all_branch_names = [branch.name for branch in all_branches]
-
             pull_requests = gh_repo.get_pulls(state="open", sort="created")
 
             options = [
@@ -69,7 +66,6 @@ def deploy(
     conn.run(f"git checkout {branch_name}")
     conn.run("git pull")
 
-    conn.run(f"source venv/bin/activate && python {job_name} | bsub")
+    conn.run(f"source venv/bin/activate && dtuhpc parse {job_name} | bsub")
 
-    conn.close()
     conn.close()

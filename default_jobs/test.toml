@@ -1,0 +1,13 @@
+queue = "hpc"
+name = "test_${{ project_name }}"
+walltime = { hours = 0, minutes = 15 }
+single_host = true
+cpu = 2
+memory = 4
+standard_output = "test_${{ project_name }}.out"
+error_output = "test_${{ project_name }}.err"
+
+commands = [
+    "cd ${{ project_path }}",
+    "echo 'Hello World!' > hello.txt",
+]
