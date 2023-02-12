@@ -22,6 +22,10 @@ jobs:
     - name: Install poetry
       run: |
         echo "ACTOR: ${{ github.actor }}"
+        echo "EVENT_NAME: ${{ github.event_name }}"
+        echo "BASE_REF: ${{ github.github_base_ref }}"
+        echo "REF: ${{ github.github_ref }}"
+        echo "REF NAME: ${{ github.github_ref_name }}"
         pipx install poetry
     - name: Poetry install
       run: poetry install
