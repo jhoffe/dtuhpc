@@ -1,6 +1,6 @@
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.commands import Nodestat
 
 
@@ -18,7 +18,7 @@ from dtuhpc.commands import Nodestat
 @click.argument("queues", nargs=-1)
 @click.pass_obj
 def nodestat(
-    config: CLIConfig,
+    ctx: CLIContext,
     cpu,
     features,
     gpu,
@@ -32,7 +32,7 @@ def nodestat(
     queues,
 ):
     """Print the nodestat from the server."""
-    conn = config.connection()
+    conn = ctx.connection
 
     cmd = Nodestat(conn)
     cmd.run(

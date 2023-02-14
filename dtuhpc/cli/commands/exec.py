@@ -1,15 +1,14 @@
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 
 
 @click.command()
 @click.argument("command", nargs=1, type=str, required=True)
 @click.pass_obj
-def exec(config: CLIConfig, command: str):
+def exec(ctx: CLIContext, command: str):
     """Executes COMMAND on the DTU HPC Server."""
-    config.load_config()
-    conn = config.connection()
+    conn = ctx.connection
     conn.run(command)
 
     conn.close()

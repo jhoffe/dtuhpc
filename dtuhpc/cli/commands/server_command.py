@@ -1,6 +1,5 @@
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
 from dtuhpc.cli.commands.server.bkill import bkill
 from dtuhpc.cli.commands.server.bqueues import bqueues
 from dtuhpc.cli.commands.server.bstat import bstat
@@ -10,10 +9,9 @@ from dtuhpc.cli.commands.server.showstart import showstart
 
 
 @click.group(name="c")
-@click.pass_obj
-def server_command(config: CLIConfig):
+def server_command() -> None:
     """Execute a predefined command."""
-    config.load_config()
+    pass
 
 
 server_command.add_command(bkill)

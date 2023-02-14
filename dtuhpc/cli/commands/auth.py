@@ -7,14 +7,14 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.console import console
 
 
 @click.command()
 def auth():
     """Authenticate with the DTU HPC cluster."""
-    auth_path = CLIConfig.get_global_auth_path()
+    auth_path = CLIContext.get_global_auth_path()
 
     if auth_path.exists():
         click.confirm(
@@ -42,7 +42,7 @@ def auth():
 
     f = Fernet(key)
 
-    auth = {
+    auth_conf = {
         "username": username,
         "password": f.encrypt(ssh_password).decode("utf-8"),
         "salt": base64.urlsafe_b64encode(salt).decode("utf-8"),
@@ -50,6 +50,6 @@ def auth():
     auth_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(auth_path, "w") as auth_file:
-        json.dump(auth, auth_file)
+        json.dump(auth_conf, auth_file)
 
     console.success(f"Successfully saved auth file to {auth_path}")

@@ -1,10 +1,11 @@
 import os
+import sys
 from io import StringIO
 from typing import Optional
 
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.console import console
 from dtuhpc.jobwriter.job_reader import JobReader
 
@@ -16,17 +17,16 @@ from dtuhpc.jobwriter.job_reader import JobReader
 @click.argument("job_name", type=str, default=None)
 @click.pass_obj
 def deploy(
-    config: CLIConfig,
+    ctx: CLIContext,
     pr: Optional[int],
     branch: Optional[str],
     job_name: Optional[str],
     jsm: bool,
 ):
     """Deploy a job."""
-    config.load_config()
-    gh = config.github()
+    gh = ctx.github
 
-    repo = config.git_repo()
+    repo = ctx.git_repo
     repo_remote = repo.remote("origin")
     repo_url = repo_remote.url
     repo.close()
@@ -62,15 +62,15 @@ def deploy(
 
             if len(options) == 0:
                 console.error("No open pull requests.")
-                os.sys.exit(1)
+                sys.exit(1)
 
             option_idx = console.prompt_list("Pick a PR: ", options)
             pr = pull_requests[option_idx]
             branch_name = pr.head.ref
 
-    config.cwd = config.config["project"]["path"]
+    ctx.cwd = ctx.config["project"]["path"]
 
-    conn = config.connection()
+    conn = ctx.connection
     conn.run("git fetch")
     conn.run(f"git checkout {branch_name}")
     conn.run("git pull")
@@ -80,13 +80,13 @@ def deploy(
     job_contents = job_reader.to_str()
 
     deploy_job_path = os.path.join(
-        config.config["ssh"]["default_cwd"], ".dtuhpc/", "deploy_job.sh"
+        ctx.config["ssh"]["default_cwd"], ".dtuhpc/", "deploy_job.sh"
     )
     conn.conn.put(StringIO(job_contents), deploy_job_path)
 
     jsm = " -jsm y" if jsm else ""
 
-    conn.run(f"bsub -cwd {config.cwd}{jsm} < {deploy_job_path}")
+    conn.run(f"bsub -cwd {ctx.cwd}{jsm} < {deploy_job_path}")
     conn.run(f"rm {deploy_job_path}")
 
     conn.close()

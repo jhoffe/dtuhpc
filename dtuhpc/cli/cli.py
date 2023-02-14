@@ -1,6 +1,6 @@
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.cli.commands import deploy, exec, init, server_command, ssh
 from dtuhpc.cli.commands.auth import auth
 
@@ -23,7 +23,7 @@ from dtuhpc.cli.commands.auth import auth
 )
 @click.pass_context
 def cli(ctx, hide, config, cwd):
-    ctx.obj = CLIConfig(config_path=config, hide=hide, cwd=cwd)
+    ctx.obj = CLIContext(config_path=config, hide=hide, cwd=cwd)
 
 
 def main():
