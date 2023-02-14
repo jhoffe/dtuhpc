@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.poetry]
 name = "dtuhpc"
-version = "2.1.1"
+version = "2.1.2"
 description = ""
 authors = ["Jonas Hoffmannn <s204071@student.dtu.dk>"]
 readme = "README.md"
