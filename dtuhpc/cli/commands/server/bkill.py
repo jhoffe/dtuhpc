@@ -1,6 +1,6 @@
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.commands import BKill
 
 
@@ -21,7 +21,7 @@ from dtuhpc.commands import BKill
 @click.argument("job_ids", nargs=-1)
 @click.pass_obj
 def bkill(
-    config: CLIConfig,
+    ctx: CLIContext,
     kill_all,
     done,
     list_signals,
@@ -38,7 +38,7 @@ def bkill(
     job_ids,
 ):
     """Kill a job."""
-    conn = config.connection()
+    conn = ctx.connection
 
     cmd = BKill(conn)
     cmd.run(

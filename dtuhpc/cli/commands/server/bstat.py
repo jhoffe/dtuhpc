@@ -2,7 +2,7 @@ from typing import Optional
 
 import click
 
-from dtuhpc.cli.cli_config import CLIConfig
+from dtuhpc.cli.cli_context import CLIContext
 from dtuhpc.commands import BStat
 
 
@@ -14,7 +14,7 @@ from dtuhpc.commands import BStat
 @click.argument("job_ids", nargs=-1)
 @click.pass_obj
 def bstat(
-    config: CLIConfig,
+    ctx: CLIContext,
     cpu: bool,
     memory: bool,
     user: Optional[str],
@@ -22,7 +22,7 @@ def bstat(
     job_ids: list[str],
 ):
     """Show current running jobs."""
-    conn = config.connection()
+    conn = ctx.connection
 
     cmd = BStat(conn)
     cmd.run(
