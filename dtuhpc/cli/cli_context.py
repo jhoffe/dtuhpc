@@ -136,6 +136,7 @@ class CLIContext:
             self._conn = HPCConnection(
                 user=self.auth["username"],
                 host=self.config["ssh"]["host"],
+                key_filename=self.config["ssh"]["key_filename"],
                 password=self.auth["password"],
                 hide=self.hide,
                 cwd=self.cwd,

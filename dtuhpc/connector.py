@@ -24,7 +24,8 @@ class HPCConnection:
         self,
         user: str,
         host: str,
-        password: str = None,
+        key_filename: str,
+        password: Optional[str] = None,
         hide: bool = False,
         cwd: Optional[str] = None,
         **kwargs,
@@ -39,11 +40,18 @@ class HPCConnection:
             cwd (Optional[str], optional): Current working directory. Defaults to None.
             **kwargs: Additional arguments parsed directly into Paramikos Client.
         """
-        connect_kwargs = {"password": password} if password is not None else None
+        connect_kwargs = {"key_filename": key_filename}
+
+        if password is not None:
+            connect_kwargs["password"] = password
+
         self.hide = hide
         self.cwd = cwd
         self.conn = Connection(
-            user=user, host=host, connect_kwargs=connect_kwargs, **kwargs
+            user=user,
+            host=host,
+            connect_kwargs=connect_kwargs,
+            **kwargs,
         )
 
     def run(self, command: str) -> Result:
