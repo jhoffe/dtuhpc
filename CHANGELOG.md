@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.3 (2023-11-18)
+
+### Fix
+
+* Cannot read keys correctly ([`45f349d`](https://github.com/jhoffe/dtuhpc/commit/45f349d30c7e121f3ad40c756af02462400378df))
+
 ## v2.1.2 (2023-02-14)
 
 
